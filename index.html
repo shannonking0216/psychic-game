@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Psychic Game</title>
+</head>
+
+<body>
+    <h1>Psychic Game</h1>
+    <p>Guess what letter I'm thinking of</p>
+    <div>
+        <p id="wins-text"></p>
+        <p id="losses-text"></p>
+        <p id="guesses-left-text"></p>
+        <p id="user-choice-text"></p>
+    </div>
+
+    <script type="text/javascript">
+        var appChoices = ["h", "k", "t", "s"];
+        //   variables that hold the score for wins, losses, and # of guesses left; set at the starting numbers.
+        var wins = 0;
+        var losses = 0;
+        var guessesLeft = 9;
+        // Below are variables that hold references to the places in the HTML where we want to display things.
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var guessesLeftText = document.getElementById("guesses-left-text");
+        var userChoiceText = document.getElementById("user-choice-text");
+
+        document.onkeyup = function (event) {
+            var userGuess = event.key;
+            var appGuess = appChoices[Math.floor(Math.random() * appChoices.length)];
+
+            if ((userGuess === "h" && appGuess === "h") ||
+                (userGuess === "k" && appGuess === "k") ||
+                (userGuess === "t" && appGuess === "t") ||
+                (userGuess === "s" && appGuess === "s")) {
+                wins++;
+                guessesLeft = 9;
+                userGuessText.textContent = " ";
+            } else if (userGuess !== appGuess) {
+                guessesLeft--;
+                userGuessText.textContent = userGuess;
+                if (guessesLeft === 0 && (userGuess !== appGuess)) {
+                    losses++;
+                    guessesLeft = 9;
+                    userGuessText.textContent = " ";
+                }
+                else if (guessesLeft === 0 && (userGuess === appGuess)) {
+                    wins++;
+                    guessesLeft = 9;
+                    userGuessText.textContent = " ";
+                }
+            }
+            winsText.textContent = "Wins: " + wins;
+            lossesText.textContent = "Losses: " + losses;
+            guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
+            userChoiceText.textContent = "Your Guesses so far: " + userGuess;
+        };
+    </script>
+</body>
+
+</html>
